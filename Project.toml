@@ -3,6 +3,10 @@ uuid = "50f98507-1624-4e38-9ef8-71e32cfc92bd"
 authors = ["uniment <uniment@gmail.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Transducers = "28d57a85-8fef-5791-bfe6-a80928e7c999"
+
 [compat]
 julia = "1"
 
