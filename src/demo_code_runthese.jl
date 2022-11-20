@@ -36,6 +36,8 @@ demo"1--(_^2; (println(it); it); _+1)"
 macro aside(ex) :($ex; it) end
 demo"1--(_^2; (@aside println(it)); _+1)"
 demo""" "1"--parse(Int,_) == 1"""
+demo" (1-1im)--(it--real, it--imag) "
+demo" (1, 2, 10)--[(it--first : it--last)...] "
 demo""" "Hello, world!"--(replace(_, "o"=>"e"); split(_, ","); join(_, ":"); uppercase) """
 demo"""
 [1, 2, 3] -- begin
