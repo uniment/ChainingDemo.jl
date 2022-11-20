@@ -4,16 +4,16 @@ This is some (buggy!) demo code to showcase my ideas [expressed in this thread](
 
 To use,
 
-```
+```julia
 ] add https://github.com/uniment/ChainingDemo.jl
 ```
 
 and 
 
-```
+```julia
 using ChainingDemo
 ```
 
 You will now have the `@demo_str` macro loaded, which can be invoked like `demo"(1,2)--(it[1]+it[2]^2)"`.
 
-To see a bunch of examples, browse to the file `ChainingDemo/src/demo_code_runthese.jl` and hit `SHIFT+ENTER` one each line of code!
+To see a bunch of examples, browse to the file `ChainingDemo/src/demo_code_runthese.jl` and hit `SHIFT+ENTER` on each line of code!
