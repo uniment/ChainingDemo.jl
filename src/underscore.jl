@@ -6,7 +6,7 @@ function _underscore_pas!(ex, rhschainparent=false)
     if ex isa Expr
         for (i,child) ∈ enumerate(ex.args)
             isrhschain = ex.args[1] ∈ Symbol.(("@chain","@chainlink")) && i > 3 ||
-                rhschainparent && ex.head == :tuple # for any expression which CCS was going to syntax transform, let it handle it.
+                rhschainparent && ex.head == :block # for any expression which CCS was going to syntax transform, let it handle it.
             _underscore_pas!(child, isrhschain)
         end
         if ex.head == :call && (:_ ∈ ex.args[2:end] || :(_...) ∈ ex.args[2:end] || :(&_) == ex.args[end]) && !rhschainparent

@@ -1,6 +1,7 @@
 macro demo_str(str)
     # very super-duper hacky: let's steal the :& operator!
     # unfortunately it doesn't give us the same precedence as :.
+    # if it looks like this is my first time writing a macro ... it's because it is. This is super hard to debug and maintain.
     str = replace(str, "--"=>"&")
     ex = _insert_chain_macros!(Meta.parse(str))
     ex = :(@underscores $ex)
@@ -26,4 +27,5 @@ function _insert_chain_macros!(ex)
     ex
 end
 
-"Very ugly dirty demo macro: inserts @chain and @chainlink macros for CCS, and invokes tight `_` currying for PAS"
+"""Very ugly dirty demo macro: inserts @chain and @chainlink macros for CCS, and invokes tight `_` currying for PAS
+This would probably be better if I made the chain insertions a single global operation, perhaps after PAS evaluation."""
