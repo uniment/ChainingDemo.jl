@@ -1,4 +1,4 @@
-# ChainingDemo
+# ChainingDemo.jl
 
 This is some (buggy!) demo code to showcase my ideas [expressed in this thread](https://discourse.julialang.org/t/fixing-the-piping-chaining-partial-application-issue-rev-2/90408/31) for partial application syntax (PAS) and call chain syntax (CCS).
 
