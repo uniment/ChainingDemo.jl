@@ -55,19 +55,19 @@ function _subchain(fns, broadcast=false) # construct array of :(it=xyz) expressi
             ex.args[1].args[1] == :Fix && return ex.args[2]
             return ex.args[1].args[1]
         end
-        !(ex.args[1] isa Symbol) && return Symbol("#unk_expr")
+        !(ex.args[1] isa Symbol) && return Symbol("#=unk_expr=#")
         ex.args[1]
     end
     for ex ∈ fns
         ex isa LineNumberNode && continue
         if _has_it(ex) # an expression of "it" (that isn't contained in a nested chainlink)
-            push!(fnames, Symbol("#expr_of_it"))
+            push!(fnames, Symbol("#=expr_of_it=#"))
             push!(out, broadcast ? :((it -> $ex).(it)) : ex)
         elseif ex isa Symbol # a named function that takes one argument
             push!(fnames, ex)
             push!(out, broadcast ? :($ex.(it)) : :($ex(it)))
         elseif ex.head == :call && (:(_...) ∈ ex.args[2:end] || count(==(:_), ex.args[2:end]) ≥ 2) # splatting PAS
-            push!(fnames, Symbol("$(fname(ex))(#)"))
+            push!(fnames, Symbol("$(fname(ex))(#==#)"))
             unfixed = filter(x->x==:_ || x==:(_...), ex.args)
             @assert findfirst(==(:(_...)), unfixed) == findlast(==(:(_...)), unfixed) "dafuk only one _... splat pls kthxbye"
             splatindex = findfirst(==(:(_...)), unfixed)
@@ -91,16 +91,16 @@ function _subchain(fns, broadcast=false) # construct array of :(it=xyz) expressi
             end
             push!(out, broadcast ? Expr(:., newex.args[1], Expr(:tuple, newex.args[2:end]...)) : newex)
         elseif ex.head == :call && :_ ∈ ex.args[2:end] # non-splatting PES
-            push!(fnames, Symbol("$(fname(ex))(#)"))
+            push!(fnames, Symbol("$(fname(ex))(#==#)"))
             newex = Expr(:call, ex.args[1], replace(ex.args[2:end], :_ => :it)...)
             push!(out, broadcast ? Expr(:., newex.args[1], Expr(:tuple, newex.args[2:end]...)) : newex)
         elseif _is_broadcast(ex) && :_ ∈ ex.args[2].args # non-splatting broadcasted PES ...NOTE I DON'T IMPLEMENT SPLATTING BROADCASTED PES FOR NOW
-            push!(fnames, Symbol("$(fname(ex))(#)"))
+            push!(fnames, Symbol("$(fname(ex))(#==#)"))
             newex = Expr(:., ex.args[1], Expr(:tuple, replace(ex.args[2].args, :_ => :it)...))
             push!(out, newex)
         else # otherwise just call the darn thing and see what happens
-            if ex.head == :call push!(fnames, Symbol("$(fname(ex))(#)"))
-            else push!(fnames, Symbol("#unk_expr")) end
+            if ex.head == :call push!(fnames, Symbol("$(fname(ex))(#==#)"))
+            else push!(fnames, Symbol("#=unk_expr=#")) end
             push!(out, broadcast ? Expr(:., ex, Expr(:tuple, :it)) : Expr(:call, ex, :it))
         end
     end
