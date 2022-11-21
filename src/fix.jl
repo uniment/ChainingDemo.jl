@@ -1,12 +1,12 @@
-abstract type AbstractFix end
+abstract type AbstractPartialFunction end
     
-struct ComposedFix{T}<:AbstractFix f::T end
-ComposedFix(f, g::AbstractFix) = ComposedFix(ComposedFunction(f, g))
-Base.:∘(f, g::AbstractFix) = ComposedFix(f, g)
+struct ComposedFix{T}<:AbstractPartialFunction f::T end
+ComposedFix(f, g::AbstractPartialFunction) = ComposedFix(ComposedFunction(f, g))
+Base.:∘(f, g::AbstractPartialFunction) = ComposedFix(f, g)
 (f::ComposedFix)(args...; kwargs...) = f.f(args...; kwargs...)
 Base.show(io::IO, f::ComposedFix) = show(io, f.f)
 
-struct Fix{F,fixinds,nargs,V<:Tuple,KW<:NamedTuple}<:AbstractFix
+struct Fix{F,fixinds,nargs,V<:Tuple,KW<:NamedTuple}<:AbstractPartialFunction
     f::F
     fixvals::V
     fixkwargs::KW

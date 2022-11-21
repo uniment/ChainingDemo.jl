@@ -7,7 +7,7 @@
 function fixit(fun, arg, nargs)
     argnames = ((gensym() for i=1:nargs)...,)
     i=arg
-    expr = :($fun($(argnames[1:i-1]...), ($(argnames[i])::Union{AbstractFix, AbstractChainLink}),$(argnames[i+1:nargs]...)) = Fix{($((1:i-1)...,(i+1:nargs)...)),$nargs}($fun, $(argnames[1:i-1]...),$(argnames[i+1:nargs]...)) ∘ $(argnames[i]) )
+    expr = :($fun($(argnames[1:i-1]...), ($(argnames[i])::Union{AbstractPartialFunction, AbstractChainLink}),$(argnames[i+1:nargs]...)) = Fix{($((1:i-1)...,(i+1:nargs)...)),$nargs}($fun, $(argnames[1:i-1]...),$(argnames[i+1:nargs]...)) ∘ $(argnames[i]) )
     eval(expr)
 end
 function fixitall(fun, nargs)
