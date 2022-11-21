@@ -7,7 +7,7 @@ ChainLink{fs}(f::F) where {F,fs} = ChainLink{F,fs}(f)
 (f::ChainLink)(it::AbstractChainLink) = f.f ∘ it
 (f::ChainLink)(args...) = f.f(args)
 (f::ChainLink)(; kwargs...) = f.f(kwargs) # do we want this? 🤔
-Base.show(io::IO, f::ChainLink{F,fs}) where {F,fs} = print(io, """ChainLink($(join(fs, "; ")))""")
+Base.show(io::IO, f::ChainLink{F,fs}) where {F,fs} = print(io, """--($(join(fs, "; ")))""")
 
 struct ComposedChainLink{F}<:AbstractChainLink f::F end
 ComposedChainLink(f, g::AbstractChainLink) = ComposedChainLink(ComposedFunction(f, g))
