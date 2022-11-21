@@ -76,24 +76,23 @@ FixLast(f,x...; kw...) = Fix{(-1,),0}(f,x...; kw...)
 
 Base.show(io::IO, f::Fix{F,fixinds,nargs,V,KW}) where {F,fixinds,nargs,V,KW} = begin
     showval(i) = begin
-        if i ∈ fixinds  string(f.fixvals[findfirst(==(i), fixinds)])
-        else  "_"  end
+        if i ∈ fixinds  show(io, f.fixvals[findfirst(==(i), fixinds)])
+        else  print(io, "_")  end
     end
     
-    str = string(f.f)*"(" 
-    args = String[]
+    str = show(io, f.f)
+    print(io, "(") 
     if nargs > 0
-        for i=1:nargs  push!(args, showval(i))  end
+        for i=1:nargs  showval(i); print(io, ", ")  end
     else
-        for i=1:max(fixinds...)  push!(args, showval(i))  end
-        push!(args, "_...")
-        for i=min(fixinds...):-1  push!(args, showval(i))  end
+        for i=1:max(fixinds...)  showval(i); print(io, ", ")  end
+        print(io, "_...")
+        for i=min(fixinds...):-1  showval(i); print(io, ", ")  end
     end
-    str *= join(args, ", ") *
     if length(f.fixkwargs) > 0
-        "; " * join(("$k=$w" for (k,w) ∈ zip(keys(f.fixkwargs), values(f.fixkwargs))), ", ")
-    else  ""  end * ")"
-    print(io, str)
+        print(io, "; " * join(("$k=$w" for (k,w) ∈ zip(keys(f.fixkwargs), values(f.fixkwargs))), ", "))
+    end
+    print(io, ")")
 end
 
 "Implements `Fix` functor, which is created by PAS expressions"
