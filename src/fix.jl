@@ -86,7 +86,7 @@ Base.show(io::IO, f::Fix{F,fixinds,nargs,V,KW}) where {F,fixinds,nargs,V,KW} = b
         for i=1:nargs  showval(i); print(io, ", ")  end
     else
         for i=1:max(fixinds...)  showval(i); print(io, ", ")  end
-        print(io, "_...")
+        print(io, "_..., ")
         for i=min(fixinds...):-1  showval(i); print(io, ", ")  end
     end
     if length(f.fixkwargs) > 0
