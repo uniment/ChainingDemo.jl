@@ -48,16 +48,16 @@ function _underscore_pas!(ex, rhschainparent=false)
         ex.head = :call
         ex.args = [:(Fix{(1,), 2}), :broadcast, _underscore_pas!(newex)]
     elseif ex.head == :. && ex.args[1] == :_ # _.prop
-        newex = :(Fix2(getproperty, $(ex.args[2])))
+        newex = :(Fix2_2(getproperty, $(ex.args[2])))
         ex.head, ex.args = newex.head, newex.args
     elseif ex.head == :. && ex.args[2] == :(:_) # obj._
-        newex = :(Fix1(getproperty, $(ex.args[1])))
+        newex = :(Fix1_2(getproperty, $(ex.args[1])))
         ex.head, ex.args = newex.head, newex.args
     elseif ex.head == :ref && ex.args[1] == :_ # _[ind]
-        newex = :(Fix2(getindex, $(ex.args[2])))
+        newex = :(Fix2_2(getindex, $(ex.args[2])))
         ex.head, ex.args = newex.head, newex.args
     elseif ex.head == :ref && ex.args[2] == :_ # d[_]
-        newex = :(Fix1(getindex, $(ex.args[1])))
+        newex = :(Fix1_2(getindex, $(ex.args[1])))
         ex.head, ex.args = newex.head, newex.args
     end
     ex isa Expr && map(_underscore_pas!, ex.args)
