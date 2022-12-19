@@ -29,11 +29,3 @@ julia> @macroexpand demo" (1,2,3)--(filter(isodd, _); map(_^2+2, _)) "
 julia> demo" (1,2,3)--(filter(isodd, _); map(_^2+2, _)) "
 (3, 11)
 ```
-
-NOTE: DO NOT USE THE `Fix` OBJECT DEFINED HERE.
-
-AT PRESENT, IT SPECIFIES VARARGS USING A TYPE PARAMETER OF ZERO.
-
-THIS IS INCORRECT; IT SHOULD BE UPDATED TO USING `-1` FOR THIS, BECAUSE ZERO-ARG FUNCTIONS (esp. where one wishes to just partially apply kwargs) ARE CURRENTLY NOT SUPPORTED CORRECTLY.
-
-THIS WILL BE FIXED, BUT NOT RIGHT NOW.
