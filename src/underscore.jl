@@ -1,3 +1,6 @@
+#module Underscores
+#export @underscores
+
 macro underscores(ex)
     esc(_underscore_pas!(ex))
 end
@@ -61,4 +64,4 @@ function _underscore_pas!(ex, rhschainparent=false)
     ex
 end
 
-"Code to turn PAS expressions into `Fix` functor objects"
+#end
