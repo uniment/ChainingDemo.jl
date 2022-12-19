@@ -1,9 +1,7 @@
 module FixedFunctions
-export AbstractFunction, AbstractPartialFunction, ComposedPartialFunction, Fix, Fix1_2, Fix2_2, FixFirst, FixLast
+export AbstractPartialFunction, ComposedPartialFunction, Fix, Fix1_2, Fix2_2, FixFirst, FixLast
 
-# I'm being a bit cheeky by declaring these, but we really should have these types in Base:
-abstract type AbstractFunction end
-abstract type AbstractPartialFunction <: AbstractFunction end
+abstract type AbstractPartialFunction <: Function end
 
 struct ComposedPartialFunction{T}<:AbstractPartialFunction f::T end
 ComposedPartialFunction(f, g::AbstractPartialFunction) = ComposedPartialFunction(ComposedFunction(f, g))
@@ -81,10 +79,9 @@ FixFirst(f,x...; kw...) = Fix{(1,),-1}(f,x...; kw...)
 FixLast(f,x...; kw...) = Fix{(-1,),-1}(f,x...; kw...)
 
 Base.show(io::IO, f::Fix{F,fixinds,nargs,V,KW}) where {F,fixinds,nargs,V,KW} = begin
-    showval(i) = begin
+    showval(i) = 
         if i ∈ fixinds  "$(f.fixvals[findfirst(==(i), fixinds)])"
         else  "_"  end
-    end    
     args=String[]
     if nargs ≥ 0
         for i=1:nargs  push!(args, showval(i))  end

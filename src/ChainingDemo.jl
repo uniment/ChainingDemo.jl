@@ -10,7 +10,7 @@ include("whitelist.jl")
 
 
 export @demo_str, @underscores, @chain, @chainlink
-export AbstractFunction, AbstractPartialFunction, ComposedPartialFunction, Fix, Fix1_2, Fix2_2, FixFirst, FixLast, ChainLink
+export AbstractPartialFunction, ComposedPartialFunction, Fix, Fix1_2, Fix2_2, FixFirst, FixLast, ChainLink
 
 
 
