@@ -6,7 +6,7 @@ include("underscore.jl")
 #using .Underscores
 include("demo.jl")
 include("chain.jl")
-include("whitelist.jl")
+#include("whitelist.jl") # sorry, I no longer believe in a composition fallback. Taking this out.
 
 
 export @demo_str, @underscores, @chain, @chainlink
