@@ -23,6 +23,9 @@ f (generic function with 1 method)
 julia> g = f(:a, _, :c, _..., :end; kw1='a', kw2='b')
 (::Fix{typeof(f), (1, 3, -1), -1, Tuple{Symbol, Symbol, Symbol}, NamedTuple{(:kw1, :kw2), Tuple{Char, Char}}}) (generic function with 1 method)
 
+julia> g(2, 4, 5; kw3='c')
+(ar = (:a, 2, :c, 4, 5, :end), kw = Base.Pairs(:kw1 => 'a', :kw2 => 'b', :kw3 => 'c'))
+
 julia> Base.map(f) = FixFirst(map, f)
 
 julia> ([:a, :b, :c], [1, 2, 3]) |> Base.splat(map((x,y) -> x=>y))
